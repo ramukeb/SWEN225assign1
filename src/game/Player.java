@@ -44,6 +44,11 @@ public class Player {
 		return LocY;
 	}
 
+	public void setLocation(int x, int y){
+		locX = x;
+		locY = y;
+	}
+
 	/**
 	 * Using this is inefficient - Cards know which player holds them.
 	 * @param c

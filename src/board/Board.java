@@ -132,18 +132,22 @@ public class Board {
 		if(direction == Direction.DOWN) {
 			squares[x][y].setPlayer(null);
 			squares[x][y+1].setPlayer(player);
+			player.setLocation(x, y+1);
 		}
 		else if(direction == Direction.UP) {
 			squares[x][y].setPlayer(null);
 			squares[x][y-1].setPlayer(player);
+			player.setLocation(x, y -1);
 		}
 		else if(direction == Direction.LEFT) {
 			squares[x][y].setPlayer(null);
 			squares[x-1][y].setPlayer(player);
+			player.setLocation(x-1, y);
 		}
 		else if(direction == Direction.RIGHT) {
 			squares[x][y].setPlayer(null);
 			squares[x+1][y].setPlayer(player);
+			player.setLocation(x+1, y);
 		}
 		
 		return true;
