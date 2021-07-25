@@ -201,8 +201,37 @@ public class Game {
 		return results;
 	}
 	
-	private void getMoveInput() {
-		
+	/**
+	 * Gets move input from System.in
+	 *  - if input is valid and move is allowed, move is applied and method returns true
+	 *  - if input is invalid, or move is not allowed, method returns false
+	 * @param player
+	 * @return
+	 */
+	private boolean getMoveInput(Player player) {
+		Scanner scan = new Scanner(System.in);
+		boolean validMove = false;
+		System.out.print("Enter a direction to move: ");
+		String next = scan.nextLine();
+		next = next.toLowerCase();
+		if(next == "u" || next == "up" || next == "n" || next == "north"){
+			if(board.move(player, Board.Direction.UP)) return true;
+		}
+		else if (next == "r" || next == "right" || next == "e" || next == "east") {
+			if(board.move(player, Board.Direction.RIGHT)) return true;
+		}
+		else if (next == "d" || next == "down" || next == "s" || next == "south") {
+			if(board.move(player, Board.Direction.DOWN)) return true;
+		}
+		else if (next == "l" || next == "left" || next == "w" || next == "west") {
+			if(board.move(player, Board.Direction.LEFT)) return true;
+		}
+		else{
+			System.out.println("Invalid move!");
+			return false;
+		}
+		System.out.println(player.getName() + " cannot move " + next);
+		return false;
 	}
 	
 	/**
