@@ -1,5 +1,7 @@
 package board;
 
+import java.util.Random;
+
 import board.Square.Room;
 import game.*;
 
@@ -152,6 +154,35 @@ public class Board {
 		
 		return true;
 	}
+
+	/**
+	 * Moves the player into a random square in the given room.
+	 * If the square is occupied by another player, recurses until it finds a non-occupied square.
+	 * @param player
+	 * @param room
+	 * @return
+	 */
+	public boolean moveToRoom(Player player, Square.Room room){
+		Random r = new Random();
+		int x, y;
+
+		if(room == Square.Room.VILLA_CELIA){
+			x = room.getCoords()[0] + r.nextInt(6);
+			y = room.getCoords()[1] + r.nextInt(4);
+		}
+		else{
+			x = room.getCoords()[0] + r.nextInt(5);
+			y = room.getCoords()[1] + r.nextInt(5);
+		}
+		
+		if(squares[x][y].getPlayer() == null){
+			player.setLocation(x, y);
+			return true;
+		}
+		else{
+			return moveToRoom(player, room);
+		}
+	}
 	
 	/**
 	 * Returns true if the given player can move in the given direction
@@ -163,18 +194,26 @@ public class Board {
 		Square curr = squares[player.getLocX()][player.getLocY()];
 		if(direction == Direction.DOWN) {
 			if(player.getLocY()+1 > 23) return false;
+			if(squares[player.getLocX()][player.getLocY()+1].getPlayer() != null) 
+				return false;
 			return curr.getDown();
 		}
 		else if(direction == Direction.UP) {
 			if(player.getLocY()-1 < 0) return false;
+			if (squares[player.getLocX()][player.getLocY() - 1].getPlayer() != null)
+				return false;
 			return curr.getUp();
 		}
 		else if(direction == Direction.LEFT) {
 			if(player.getLocX()-1 < 0) return false;
+			if (squares[player.getLocX() - 1][player.getLocY()].getPlayer() != null)
+				return false;
 			return curr.getLeft();
 		}
 		else if(direction == Direction.RIGHT) {
 			if(player.getLocX()+1 < 23) return false;
+			if (squares[player.getLocX() + 1][player.getLocY()].getPlayer() != null)
+				return false;
 			return curr.getRight();
 		}
 		else return false;
